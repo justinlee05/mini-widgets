@@ -32,10 +32,11 @@
     "typescriptreact"
   ],
   "typescript.preferences.includePackageJsonAutoImports": "on",
+  "typescript.suggest.autoImports": true,
   "editor.tabSize": 2,
   "editor.insertSpaces": true,
   "explorer.sortOrder": "type",
-  "typescript.preferences.importModuleSpecifier": "non-relative",
+  "typescript.preferences.importModuleSpecifier": "shortest",
   "typescript.tsdk": "node_modules/typescript/lib",
   "prettier.requireConfig": true,
   "prettier.useEditorConfig": false

@@ -8,12 +8,14 @@ interface GridDashboardProps {
   items: GridItem[];
   setItems: (items: GridItem[]) => void;
   config: GridConfig;
+  isLoading?: boolean; // 로딩 상태 추가 (선택적)
 }
 
 export default function GridDashboard({
   items,
   setItems,
   config,
+  isLoading = false, // 기본값은 false
 }: GridDashboardProps) {
   // 드래그 상태 추적
   const [isDragging, setIsDragging] = useState(false);
@@ -70,7 +72,7 @@ export default function GridDashboard({
         key={item.id}
         style={{ gridColumn, gridRow }}
         onPointerDown={(e) => onPointerDown(e, item)}
-        className="relative"
+        className="animate-appear relative"
       >
         {getWidgetComponent()}
       </div>
@@ -79,20 +81,9 @@ export default function GridDashboard({
 
   return (
     <div className="w-full">
-      {/* 그리드 헤더 */}
-      <div className="mb-6">
-        <h1 className="mb-2 text-2xl font-bold text-gray-800">
-          Mini Widgets Dashboard
-        </h1>
-        <p className="text-gray-600">
-          위젯을 드래그해서 자유롭게 배치하세요. {config.cols}열 그리드 영역
-          내에서 충돌 없이 배치됩니다.
-        </p>
-      </div>
-
       {/* 그리드 컨테이너 */}
       <div
-        className={`relative box-border grid select-none overflow-hidden rounded-xl border-2 transition-all duration-200 ${
+        className={`relative mx-auto box-border grid select-none overflow-hidden rounded-xl border-2 transition-all duration-200 ${
           isDragging
             ? 'border-blue-400 bg-blue-50/30 shadow-lg'
             : 'border-gray-300 bg-gray-50'
@@ -102,7 +93,16 @@ export default function GridDashboard({
         }}
         aria-label="Widget grid dashboard"
       >
-        {items.map(renderWidget)}
+        {/* 로딩 상태 표시 */}
+
+        <div
+          className={`absolute inset-0 flex items-center justify-center bg-white/50 backdrop-blur-sm ${isLoading ? 'opacity-95' : 'pointer-events-none opacity-0'} z-10 transition-opacity duration-300`}
+        >
+          <span className="text-gray-500">Loading...</span>
+        </div>
+
+        {/* 위젯 렌더링 */}
+        {!isLoading && items.map(renderWidget)}
       </div>
 
       {/* 상태 디버그 정보 */}

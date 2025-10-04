@@ -15,6 +15,9 @@ module.exports = {
         sans: ['var(--font-geist-sans)', 'Arial', 'sans-serif'],
         mono: ['var(--font-geist-mono)', 'monospace'],
       },
+      animation: {
+        appear: 'appear 0.5s ease-out',
+      },
     },
   },
   plugins: [],
